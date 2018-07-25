@@ -8,6 +8,7 @@ body {
 
 .main {
   display: flex;
+  height: 85vh;
   background-color: #585858;
   font-family: 'Sunflower', Arial, Helvetica, sans-serif;
 }
@@ -42,6 +43,7 @@ body {
   width: 200px;
   font-size: 15px;
   outline: none;
+  padding-left: 10px;
 }
 
 .search-form input[type='submit'] {
