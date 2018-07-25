@@ -57,6 +57,10 @@ body {
   cursor: pointer;
 }
 
+.search-form input[type='submit']:hover {
+  background-color: #142e49;
+}
+
 .title {
   height: 100px;
   display: flex;
