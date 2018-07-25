@@ -3,21 +3,28 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import MapContainer from './MapContainer';
 import Search from './Search';
-import Help from './Help';
+import Title from './Title';
 
 class App extends Component {
   render() {
     return (
       <div className='app'>
         <Route exact path='/' render={({ history }) => (
-          <div className="main">
-            <Search />
-            <MapContainer />
+          <div>
+            <div className='title-container'>
+              <Title
+              title='Zagreb places'
+              />
+            </div>
+            <div className='main'>
+              <div className='search-container'>
+                <Search />
+              </div>
+              <div className='map-container' >
+                <MapContainer />
+              </div>
+            </div>
           </div>
-        )}
-        />
-        <Route exact path='/help' render={({ history }) => (
-          <Help/>
         )}
         />
       </div>
