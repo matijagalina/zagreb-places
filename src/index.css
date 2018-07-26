@@ -33,6 +33,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 288px;
 }
 
 .search-form input[type='text'] {
@@ -40,23 +41,10 @@ body {
   margin: 0;
   padding: 0;
   border: none;
-  width: 200px;
+  width: 100%;
   font-size: 15px;
   outline: none;
   padding-left: 10px;
-}
-
-.search-form input[type='submit'] {
-  border: none;
-  border-radius: 0;
-  height: 40px;
-  margin: 0;
-  padding: 0 10px;
-  background-color: #235d9e;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 15px;
-  cursor: pointer;
 }
 
 .search-form input[type='submit']:hover {
