@@ -63,6 +63,30 @@ body {
   background-color: #142e49;
 }
 
+.list-container {
+  background-color: #b1b1b1;
+  padding: 10px;
+}
+
+.list {
+  list-style-type: none;
+  margin: 20px 5px;
+  padding: 0;
+}
+
+.list-item {
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #000;
+  margin: 5px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  text-decoration: underline;
+}
+
 .title {
   height: 100px;
   display: flex;
