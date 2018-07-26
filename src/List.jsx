@@ -8,7 +8,12 @@ class List extends Component {
         <ul className='list'>
           {
             this.props.items.map(item => (
-              <li className="list-item" key={item.id}>{item.name}</li>
+              <li
+                className="list-item"
+                key={item.id}
+                onClick={() => console.log('test')}>
+                {item.name}
+              </li>
             ))
           }
         </ul>
