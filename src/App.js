@@ -22,7 +22,7 @@ class App extends Component {
         id: 2,
         position: {
           lat: 45.812978,
-          long: 15.966353
+          lng: 15.966353
         }
       },
       {
@@ -30,7 +30,7 @@ class App extends Component {
         id: 3,
         position: {
           lat: 45.814391,
-          long: 15.975747
+          lng: 15.975747
         }
       },
       {
@@ -38,15 +38,15 @@ class App extends Component {
         id: 4,
         position: {
           lat: 45.819654,
-          long: 16.015640
+          lng: 16.015640
         }
       },
       {
-        name: 'The Museum of Naive Art',
+        name: 'Botanical Garden',
         id: 5,
         position: {
-          lat: 45.815363,
-          long: 15.973288
+          lat: 45.804944,
+          lng: 15.972202
         }
       },
     ]
@@ -59,17 +59,19 @@ class App extends Component {
           <div>
             <div className='title-container'>
               <Title
-              title='Zagreb places'
+                title='Zagreb places'
               />
             </div>
             <div className='main'>
               <div className='search-container'>
                 <Search
-                locations={this.state.locations}
+                  locations={this.state.locations}
                 />
               </div>
               <div className='map-container' >
-                <MapContainer />
+                <MapContainer
+                  locations={this.state.locations}
+                />
               </div>
             </div>
           </div>

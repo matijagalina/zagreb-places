@@ -18,12 +18,24 @@ export class MapContainer extends Component {
         style={style}
         className='map'
         google={this.props.google}
-        zoom={15}
+        zoom={14}
         initialCenter={{
           lat: 45.814632,
           lng: 15.978783
         }}
       >
+      {
+        this.props.locations.map(location => (
+          <Marker
+          key={location.name}
+          name={location.name}
+          position={{
+            lat: location.position.lat,
+            lng: location.position.lng
+          }}
+          />
+        ))
+      }
       </Map>
     );
   }
