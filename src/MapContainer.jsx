@@ -25,17 +25,29 @@ export class MapContainer extends Component {
         }}
       >
       {
-        this.props.locations.map(location => (
+        !this.props.input && this.props.locations.map(location => (
           <Marker
-          key={location.name}
-          name={location.name}
-          position={{
-            lat: location.position.lat,
-            lng: location.position.lng
-          }}
+            key={location.name}
+            name={location.name}
+            position={{
+              lat: location.position.lat,
+              lng: location.position.lng
+            }}
           />
         ))
       }
+        {
+          !!this.props.input && !!this.props.places && this.props.places.length > 0 && this.props.places.map(location => (
+            <Marker
+              key={location.name}
+              name={location.name}
+              position={{
+                lat: location.position.lat,
+                lng: location.position.lng
+              }}
+            />
+          ))
+        }
       </Map>
     );
   }

@@ -11,13 +11,22 @@ class Search extends Component {
   handleInput(input) {
     this.setState({
       query: input
-    })
+    },
+      function () {
+        let searchedPlaces;
+        if (!!this.state.query) {
+          const match = new RegExp(escapeRegExp(this.state.query), 'i');
+          searchedPlaces = this.props.locations.filter((location) =>
+            match.test(location.name))
+        }
+        this.props.filter(searchedPlaces, input);
+      })
   }
 
   render() {
 
     let searchedPlaces;
-    if (!!this.state.query) {
+    if (!!this.props.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i');
       searchedPlaces = this.props.locations.filter((location) =>
         match.test(location.name))
@@ -29,14 +38,14 @@ class Search extends Component {
         <div>
           <form className='search-form'>
             <input
-            type="text"
-            placeholder='Search for the place'
-            onChange={(event) => this.handleInput(event.target.value)}/>
+              type="text"
+              placeholder='Search for the place'
+              onChange={(event) => this.handleInput(event.target.value)} />
           </form>
           < List
-          items={
-            (!!this.state.query) ? searchedPlaces : this.props.locations
-          }
+            items={
+              (!!this.props.query) ? searchedPlaces : this.props.locations
+            }
           />
         </div>
       </div>

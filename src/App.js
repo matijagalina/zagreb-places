@@ -49,7 +49,16 @@ class App extends Component {
           lng: 15.972202
         }
       },
-    ]
+    ],
+    searchedPlaces: [],
+    input: ''
+  }
+
+  handleSearch(places, input) {
+    this.setState({
+      searchedPlaces: places,
+      input: input
+    })
   }
 
   render() {
@@ -66,11 +75,15 @@ class App extends Component {
               <div className='search-container'>
                 <Search
                   locations={this.state.locations}
+                  filter={(places, input) => this.handleSearch(places, input)}
+                  query={this.state.input}
                 />
               </div>
               <div className='map-container' >
                 <MapContainer
                   locations={this.state.locations}
+                  places={this.state.searchedPlaces}
+                  input={this.state.input}
                 />
               </div>
             </div>
