@@ -122,7 +122,7 @@ class Main extends Component {
       })
     } else {
       this.props.locations.forEach((location, index) => {
-        if (!!markers.length) {
+        if (!!markers && markers.length !== 0) {
           markers[index].setVisible(true)
         }
       })
