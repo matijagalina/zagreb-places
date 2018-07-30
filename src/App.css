@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Sunflower:300');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Sunflower', sans-serif;
+}
+
+.title-container {
+  margin: 0;
+  padding: 5px;
+  color: #fff;
+  text-align: center;
+  background-color: #235d9e;
+}
+
+.hamburger-menu-container {
+  display: none;
+}
+
+.hamburger-menu-container img {
+  width: 50px;
+}
+
+.map-container {
+  margin: 0;
+  width: 75%;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+}
+
+.search-container {
+  width: 25%;
+  background-color: #104142;
+  height: 100vh;
+}
+
+.search-container h2 {
+  color: #fff;
+  text-align: center;
+}
+
+.search-container-inner {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.search-container-inner input {
+  font-size: 16px;
+  height: 50px;
+  outline: 0;
+  border: none;
+  padding: 0 0 0 20px;
+}
+
+.search-container-inner ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  background-color: #585858;
+}
+
+.search-container-inner li {
+  text-decoration: none;
+  color: white;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.search-container-inner li:hover {
+  text-decoration: underline;
+}

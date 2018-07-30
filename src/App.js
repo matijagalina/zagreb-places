@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Route } from 'react-router-dom';
-import MapContainer from './MapContainer';
-import Search from './Search';
-import Title from './Title';
+import { GoogleApiWrapper } from 'google-maps-react'
+import './App.css'
+import Main from './Main'
+import Title from './Title'
 
 class App extends Component {
 
@@ -48,51 +47,23 @@ class App extends Component {
           lat: 45.804944,
           lng: 15.972202
         }
-      },
-    ],
-    searchedPlaces: [],
-    input: ''
-  }
-
-  handleSearch(places, input) {
-    this.setState({
-      searchedPlaces: places,
-      input: input
-    })
+      }
+    ]
   }
 
   render() {
     return (
-      <div className='app'>
-        <Route exact path='/' render={({ history }) => (
-          <div>
-            <div className='title-container'>
-              <Title
-                title='Zagreb places'
-              />
-            </div>
-            <div className='main'>
-              <div className='search-container'>
-                <Search
-                  locations={this.state.locations}
-                  filter={(places, input) => this.handleSearch(places, input)}
-                  query={this.state.input}
-                />
-              </div>
-              <div className='map-container' >
-                <MapContainer
-                  locations={this.state.locations}
-                  places={this.state.searchedPlaces}
-                  input={this.state.input}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-        />
+      <div>
+        <Title />
+        <Main
+          google={this.props.google}
+          locations={this.state.locations}
+          />
       </div>
     );
   }
 }
 
-export default App;
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDXKIs49jQueAbsamKl1tqffZq-n54bkuQ'
+})(App)
