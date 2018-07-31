@@ -21,8 +21,7 @@ class Search extends Component {
           <ul className='places-list'>
             {
               markers.filter(marker => marker.getVisible()).map((marker, index) => (
-                <li
-                  key={index}>
+                <li key={marker.title}>
                   {marker.title}
                 </li>
               ))

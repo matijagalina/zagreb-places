@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Search from './Search'
 import escapeRegExp from 'escape-string-regexp'
+import * as FourSquare from './FourSquare'
 
 class Main extends Component {
 
@@ -10,7 +11,7 @@ class Main extends Component {
     infowindow: new this.props.google.maps.InfoWindow()
   }
 
-  // created variable to store map
+  // created variable to store map and to be globally accessible
   map = undefined
 
   componentDidMount() {
@@ -84,6 +85,8 @@ class Main extends Component {
     const { google } = this.props
     const { markers } = this.state
 
+    const content = this.getLocationData(marker)
+
     if (!!infowindow.marker) {
       const marker = markers.filter(marker => marker.title === infowindow.marker.title)
       marker[0].setAnimation(null);
@@ -93,7 +96,20 @@ class Main extends Component {
       marker.setAnimation(google.maps.Animation.BOUNCE)
       infowindow.marker = marker
 
-      infowindow.setContent(`<h2>TEST</h2>`)
+      // use data from local storage
+
+      infowindow.setContent(`<div class="infowindow-container">
+                              <h3>${content.name}</h3>
+                              <div class="infowindow-inner">
+                                <img src=${content.bestPhoto.prefix + '120x120' +  content.bestPhoto.suffix}>
+                                <div class="infowindow-details">
+                                  <p>${content.location.address}</p>
+                                  <p><a href=${content.shortUrl} target="_blank">Visit here</a></p>
+                                  <p>Rating: ${content.rating || 'not available'}</p>
+                                  <p>Hours:<br>${content.timeframes[0].open[0].renderedTime || 'not available'}</p>
+                                </div>
+                              </div>
+                            </div>`)
 
       infowindow.open(this.map, marker)
 
@@ -102,6 +118,18 @@ class Main extends Component {
         infowindow.marker = null
       })
     }
+  }
+
+  getLocationData = (marker) => {
+    const { locationData } = this.props
+    let data;
+
+    locationData.forEach(place => {
+      if (place.name === marker.title) {
+        data = place.data;
+      }
+    })
+    return data;
   }
 
   render() {
