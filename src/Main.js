@@ -37,6 +37,7 @@ class Main extends Component {
       let $errorContainer = document.createElement('div')
       $errorContainer.innerHTML = '<h2>There was an error when creating map. Please try again later</h2>'
       $mapContainer.appendChild($errorContainer)
+      alert('Google map failed to display!')
     }
   }
 

@@ -84,6 +84,7 @@ class App extends Component {
         FourSquare.getVenueDetails(location.id)
           .then(data => {
             if (!data || !data.response.venue) {
+              alert('Data request from Foursquare API failed!')
               return;
             } else {
               this.setState(((state) => ({
