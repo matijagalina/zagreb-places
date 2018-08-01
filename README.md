@@ -2,8 +2,8 @@
 
 Zagreb places is simple SPA aplication built for the purposes of the Udacity Frontend nanodegree course.
 It searches through some of the most interesting places in Zagreb and displays them on the map using markers and infowindows which show
-relevant content about the locations using the **Foursquare API**
-Its main parts are **Search** and **Map**
+relevant content about the locations using the **Foursquare API**.
+Its main parts are **Search** and **Map**.
 
 ## Search
 
@@ -32,3 +32,10 @@ There you can see and use the application.
 This application is build using the *create-react-app* boilerplate and with it comes the proprietary service worker which works only in production environment.
 To set the application to production environment run the command `npm run build`.
 When the content is cached and/or ready to use you will get alert message notifying you about that.
+
+## Responsive design
+
+This app makes use of the responsive design to look great both on desktop and mobile devices no matter the device window widths.
+On widths smaller than *700px* the search component will be hidden and left of the title in top left corner the hamburger menu will be shown.
+Click on it to display the search back again and hide when you don't need it anymore.
+The application is responsive down to the 300px width which is enough for almost every device in use today.

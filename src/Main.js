@@ -33,7 +33,6 @@ class Main extends Component {
       })
       // create markers on the map and add onclick listeners to list items
       this.createMarkers()
-      // this.addListenersToListItems()
     } else {
       // error handling
       const $mapContainer = document.getElementById('map')
@@ -50,16 +49,6 @@ class Main extends Component {
       query: value
     })
   }
-
-  // // add listeners to list items
-  // addListenersToListItems = () => {
-  //   const list = document.querySelector('.places-list')
-  //   list.addEventListener('click', event => {
-  //     if (event.target.nodeName === 'LI') {
-  //       this.showInfowindow(event)
-  //     }
-  //   })
-  // }
 
   // list items listener callback - set map center to clicked location and open the infowindow with foursquare content
   showInfowindow = (event) => {
