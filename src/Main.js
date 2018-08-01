@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Search from './Search'
 import escapeRegExp from 'escape-string-regexp'
-import * as FourSquare from './FourSquare'
 
 class Main extends Component {
 
@@ -28,9 +27,16 @@ class Main extends Component {
           lat: 45.814632,
           lng: 15.978783
         },
-        zoom: 14
+        zoom: 14,
+        fullscreenControl: false,
+        mapTypeControl: false
       })
       this.createMarkers()
+    } else {
+      const $mapContainer = document.getElementById('map')
+      let $errorContainer = document.createElement('div')
+      $errorContainer.innerHTML = '<h2>There was an error when creating map. Please try again later</h2>'
+      $mapContainer.appendChild($errorContainer)
     }
   }
 
@@ -85,32 +91,40 @@ class Main extends Component {
     const { google } = this.props
     const { markers } = this.state
 
-    const content = this.getLocationData(marker)
-
     if (!!infowindow.marker) {
       const marker = markers.filter(marker => marker.title === infowindow.marker.title)
       marker[0].setAnimation(null);
     }
 
     if (infowindow.marker !== marker) {
-      marker.setAnimation(google.maps.Animation.BOUNCE)
       infowindow.marker = marker
 
-      // use data from local storage
+      // get data
+      const content = this.getLocationData(marker)
+      const errorPlaceholderText = 'not availaible'
 
-      infowindow.setContent(`<div class="infowindow-container">
-                              <h3>${content.name}</h3>
-                              <div class="infowindow-inner">
-                                <img src=${content.bestPhoto.prefix + '120x120' +  content.bestPhoto.suffix}>
-                                <div class="infowindow-details">
-                                  <p>${content.location.address}</p>
-                                  <p><a href=${content.shortUrl} target="_blank">Visit here</a></p>
-                                  <p>Rating: ${content.rating || 'not available'}</p>
-                                  <p>Hours:<br>${content.timeframes[0].open[0].renderedTime || 'not available'}</p>
-                                </div>
-                              </div>
-                            </div>`)
+      if (content === null) {
+        infowindow.setContent('<h2>Content is currently unavailaible</h2>')
+      } else {
 
+        let rating = !!content.rating ? content.rating : errorPlaceholderText
+        let hours = !!content.hours ? content.hours.timeframes[0].open[0].renderedTime : errorPlaceholderText
+
+        infowindow.setContent('<div class="infowindow-container">' +
+                              '<h3>' + content.name + '</h3>' +
+                              '<div class="infowindow-inner">' +
+                                '<img src=' + content.bestPhoto.prefix + '120x120' + content.bestPhoto.suffix + '>' +
+                                '<div class="infowindow-details">' +
+                                  '<p>' + content.location.address + '</p>' +
+                                  '<p><a href=' + content.shortUrl + ' target="_blank">Visit here</a></p>' +
+                                  '<p>Rating: ' + rating.toString() + '</p>' +
+                                  '<p>Hours:<br>' + hours + '</p>' +
+                                '</div>' +
+                              '</div>' +
+                            '</div>')
+      }
+
+      marker.setAnimation(google.maps.Animation.BOUNCE)
       infowindow.open(this.map, marker)
 
       infowindow.addListener('closeclick', function () {
@@ -122,14 +136,28 @@ class Main extends Component {
 
   getLocationData = (marker) => {
     const { locationData } = this.props
-    let data;
+    const localStorageData = JSON.parse(localStorage.getItem('locationData')) || []
+    let data
 
-    locationData.forEach(place => {
-      if (place.name === marker.title) {
-        data = place.data;
-      }
-    })
-    return data;
+    if (!!localStorageData && localStorageData.length > 0) {
+      localStorageData.forEach(place => {
+        if (place.name === marker.title) {
+          data = place.data
+        }
+      })
+      return data
+    }
+
+    if (!localStorageData || localStorageData.length === 0) {
+      locationData.forEach(place => {
+        if (place.name === marker.title) {
+          data = place.data
+        }
+      })
+      return data
+    } else {
+      return null
+    }
   }
 
   render() {

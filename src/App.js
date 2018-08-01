@@ -57,24 +57,46 @@ class App extends Component {
     this.getVenueData()
   }
 
+
   getVenueData = () => {
+
+    // if opened for the first time fetch locations data from foursquare and store it to the local storage
+    // after that use the data from local storage to limit the use of foursquare API because of small venue details endpoint quota ( 50/day)
+
     const { locations } = this.state
+    let localStorageData;
 
-    // check if data is returned
+    if (!!localStorage.getItem('locationData')) {
+      localStorageData = JSON.parse(localStorage.getItem('locationData'))
+    } else {
+      localStorageData = []
+    }
 
-    locations.forEach(location => {
-      FourSquare.getVenueDetails(location.id)
-        .then(data => this.setState(((state) => ({
-          locationData: state.locationData.concat([{
-            data: data.response.venue,
-            name: data.response.venue.name
-          }])
-        })))
-      )
-    })
+    if (!!localStorageData && localStorageData.length > 0) {
+      this.setState({
+        locationData: localStorageData
+      })
+    }
 
-    // store in local and later use in main data from session
-    localStorage.setItem('locationData', this.state.locationData)
+    if (!localStorageData || localStorageData.length === 0) {
+
+      locations.forEach(location => {
+        FourSquare.getVenueDetails(location.id)
+          .then(data => {
+            if (!data || !data.response.venue) {
+              return;
+            } else {
+              this.setState(((state) => ({
+                locationData: state.locationData.concat([{
+                  data: data.response.venue,
+                  name: data.response.venue.name
+                }])
+              })))
+              localStorage.setItem('locationData', JSON.stringify(this.state.locationData))
+            }
+          })
+      })
+    }
   }
 
   render() {
@@ -84,7 +106,7 @@ class App extends Component {
         <Main
           google={this.props.google}
           locations={this.state.locations}
-          />
+        />
       </div>
     );
   }
