@@ -59,6 +59,7 @@ body {
 .infowindow-details {
   text-align: center;
   margin-left: 5px;
+  width: 140px;
 }
 
 .infowindow-details p {
