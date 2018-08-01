@@ -80,6 +80,7 @@ class App extends Component {
 
     if (!localStorageData || localStorageData.length === 0) {
 
+      // use foursquare fetch function on every locations item to get data
       locations.forEach(location => {
         FourSquare.getVenueDetails(location.id)
           .then(data => {

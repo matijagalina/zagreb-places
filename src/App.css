@@ -119,13 +119,13 @@ body {
   text-decoration: underline;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .search-container {
     width: 40%;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .search-container {
     display: none;
   }

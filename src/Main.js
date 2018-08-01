@@ -17,6 +17,7 @@ class Main extends Component {
     this.startMap()
   }
 
+  // set the map and it's settings to the #map container
   startMap = () => {
     if (!!this.props && !!this.props.google) {
       const { google } = this.props
@@ -30,9 +31,11 @@ class Main extends Component {
         fullscreenControl: false,
         mapTypeControl: false
       })
+      // create markers on the map and add onclick listeners to list items
       this.createMarkers()
       this.addListenersToListItems()
     } else {
+      // error handling
       const $mapContainer = document.getElementById('map')
       let $errorContainer = document.createElement('div')
       $errorContainer.innerHTML = '<h2>There was an error when creating map. Please try again later</h2>'
@@ -41,12 +44,14 @@ class Main extends Component {
     }
   }
 
+  // handle received query via Search component props
   handleInputChange = (value) => {
     this.setState({
       query: value
     })
   }
 
+  // add listeners to list items
   addListenersToListItems = () => {
     const list = document.querySelector('.places-list')
     list.addEventListener('click', event => {
@@ -56,17 +61,18 @@ class Main extends Component {
     })
   }
 
+  // list items listener callback - set map center to clicked location and open the infowindow with foursquare content
   showInfowindow = (event) => {
-    const { markers, infowindow } = this.state
+    const { markers } = this.state
     const match = new RegExp(escapeRegExp(event.target.innerText), 'i')
     const selectedPlace = markers.filter(marker => match.test(marker.title))
     this.map.setCenter(selectedPlace[0].getPosition())
-    this.buildInfoWindowContent(selectedPlace[0], infowindow)
+    this.buildInfoWindowContent(selectedPlace[0])
   }
 
+  // create markers on map going through all the locations and creating the marker for each one
   createMarkers = () => {
     const { google } = this.props
-    let { infowindow } = this.state
 
     this.props.locations.forEach((location) => {
       const marker = new google.maps.Marker({
@@ -78,29 +84,34 @@ class Main extends Component {
         title: location.name
       })
 
+      // add same behaviour to clicked marker as in clicked list item location
       marker.addListener('click', () => {
         this.map.setCenter(marker.getPosition())
-        this.buildInfoWindowContent(marker, infowindow)
+        this.buildInfoWindowContent(marker)
       })
+      // add markers to state
       this.setState((state) => ({
         markers: state.markers.concat([marker])
       }))
     })
   }
 
-  buildInfoWindowContent = (marker, infowindow) => {
+  // create infowindow with foursquare content
+  buildInfoWindowContent = (marker) => {
     const { google } = this.props
-    const { markers } = this.state
+    const { markers, infowindow } = this.state
 
+    // stop animation on the marker if there is one with open infowindow
     if (!!infowindow.marker) {
       const marker = markers.filter(marker => marker.title === infowindow.marker.title)
       marker[0].setAnimation(null);
     }
 
+    // create infowindow on a marker
     if (infowindow.marker !== marker) {
       infowindow.marker = marker
 
-      // get data for markers infowindow
+      // get data for markers infowindow and set its content
       const content = this.getLocationData(marker)
 
       if (content === null) {
@@ -126,9 +137,11 @@ class Main extends Component {
                             '</div>')
       }
 
+      // add bounce animation to marker and open infowindow
       marker.setAnimation(google.maps.Animation.BOUNCE)
       infowindow.open(this.map, marker)
 
+      // add listener to closing infowindow - stop animation, close infowindow
       infowindow.addListener('closeclick', function () {
         marker.setAnimation(null)
         infowindow.marker = null
@@ -136,6 +149,7 @@ class Main extends Component {
     }
   }
 
+  // get data for a marker from local storage or locationData props
   getLocationData = (marker) => {
     const { locationData } = this.props
     const localStorageData = JSON.parse(localStorage.getItem('locationData')) || []
@@ -165,6 +179,7 @@ class Main extends Component {
   render() {
     const { query, markers, infowindow } = this.state
 
+    // handle list query behaviour - based on query set matched markers visible and hide others
     if (!!query) {
       const match = new RegExp(escapeRegExp(query), 'i')
       this.props.locations.forEach((location, index) => {
@@ -179,6 +194,7 @@ class Main extends Component {
         }
       })
     } else {
+      // if no query or empty input field show all markers
       this.props.locations.forEach((location, index) => {
         if (!!markers && markers.length !== 0) {
           markers[index].setVisible(true)

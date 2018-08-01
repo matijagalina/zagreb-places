@@ -10,9 +10,9 @@ const detailsUrl = 'https://api.foursquare.com/v2/venues/'
 //   return new Promise(
 //     function (resolve, reject) {
 //       fetch(idUrl + '?ll=' + lat + ',' + lng + '&v=' + VERSION + '&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET)
-//         .then(function (response) { return response.json() })
-//         .then(function (response) {
-//           resolve(response);
+//         .then(function (data) { return data.json() })
+//         .then(function (data) {
+//           resolve(data);
 //         })
 //         .catch(function (error) {
 //           reject(error);
@@ -26,9 +26,9 @@ export function getVenueDetails(id) {
   return new Promise(
     function (resolve, reject) {
       fetch(detailsUrl + id + '?v=' + VERSION + '&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET)
-        .then(function (response) { return response.json() })
-        .then(function (response) {
-          resolve(response);
+        .then(function (data) { return data.json() })
+        .then(function (data) {
+          resolve(data);
         })
         .catch(function (error) {
           reject(error);
