@@ -10,12 +10,11 @@ class Main extends Component {
     infowindow: new this.props.google.maps.InfoWindow()
   }
 
-  // created variable to store map and to be globally accessible
+  // created variable to store map and to be globally accessible inside component
   map = undefined
 
   componentDidMount() {
     this.startMap()
-    this.addListenersToListItems()
   }
 
   startMap = () => {
@@ -32,6 +31,7 @@ class Main extends Component {
         mapTypeControl: false
       })
       this.createMarkers()
+      this.addListenersToListItems()
     } else {
       const $mapContainer = document.getElementById('map')
       let $errorContainer = document.createElement('div')
@@ -100,27 +100,27 @@ class Main extends Component {
     if (infowindow.marker !== marker) {
       infowindow.marker = marker
 
-      // get data
+      // get data for markers infowindow
       const content = this.getLocationData(marker)
-      const errorPlaceholderText = 'not availaible'
 
       if (content === null) {
         infowindow.setContent('<h2>Content is currently unavailaible</h2>')
       } else {
 
+        const errorPlaceholderText = 'not availaible'
         let rating = !!content.rating ? content.rating : errorPlaceholderText
         let hours = !!content.hours ? content.hours.timeframes[0].open[0].renderedTime : errorPlaceholderText
 
-        infowindow.setContent('<div class="infowindow-container">' +
-                              '<h3>' + content.name + '</h3>' +
+        infowindow.setContent('<div role="contentinfo" tabIndex="0" class="infowindow-container">' +
+                              '<h3 tabIndex="0">' + content.name + '</h3>' +
                               '<div class="infowindow-inner">' +
                                 '<img src=' + content.bestPhoto.prefix + '120x120' + content.bestPhoto.suffix +
                                  ' alt="photo from ' + content.name + '">' +
                                 '<div class="infowindow-details">' +
-                                  '<p>' + content.location.address + '</p>' +
+                                  '<p tabIndex="0">' + content.location.address + '</p>' +
                                   '<p><a href=' + content.shortUrl + ' target="_blank">Visit on FourSquare</a></p>' +
-                                  '<p>Rating: ' + rating.toString() + '</p>' +
-                                  '<p>Hours:<br>' + hours + '</p>' +
+                                  '<p tabIndex="0">Rating: ' + rating.toString() + '</p>' +
+                                  '<p tabIndex="0">Hours:<br>' + hours + '</p>' +
                                 '</div>' +
                               '</div>' +
                             '</div>')
