@@ -113,10 +113,11 @@ class Main extends Component {
         infowindow.setContent('<div class="infowindow-container">' +
                               '<h3>' + content.name + '</h3>' +
                               '<div class="infowindow-inner">' +
-                                '<img src=' + content.bestPhoto.prefix + '120x120' + content.bestPhoto.suffix + '>' +
+                                '<img src=' + content.bestPhoto.prefix + '120x120' + content.bestPhoto.suffix +
+                                 ' alt="photo from ' + content.name + '">' +
                                 '<div class="infowindow-details">' +
                                   '<p>' + content.location.address + '</p>' +
-                                  '<p><a href=' + content.shortUrl + ' target="_blank">Visit here</a></p>' +
+                                  '<p><a href=' + content.shortUrl + ' target="_blank">Visit on FourSquare</a></p>' +
                                   '<p>Rating: ' + rating.toString() + '</p>' +
                                   '<p>Hours:<br>' + hours + '</p>' +
                                 '</div>' +
