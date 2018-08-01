@@ -2,9 +2,23 @@ import React, { Component } from 'react';
 
 class Search extends Component {
 
+  componentDidMount() {
+    this.addListenersToListItems()
+  }
+
   // send query value from input to parent component for state update
   sendValueChange(event) {
     this.props.input(event.target.value)
+  }
+
+  // add listeners to list items
+  addListenersToListItems = () => {
+    const list = document.querySelector('.places-list')
+    list.addEventListener('click', event => {
+      if (event.target.nodeName === 'LI') {
+        this.props.sendClickData(event)
+      }
+    })
   }
 
   render() {
