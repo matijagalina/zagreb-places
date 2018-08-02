@@ -20,6 +20,18 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      function gm_authFailure() {
+          var $mapContainer = document.getElementById('map');
+          $mapContainer.innerHTML = '<div class="error-container">' +
+                                      '<h2>You are experiencing issues with Google Maps API</h2>' +
+                                      '<p>Google map is replaced with this static image of the map</p>' +
+                                      '<div>' +
+                                        '<img class="error-image" src="https://image.ibb.co/f8545e/Screen_Shot_2018_08_02_at_18_46_07.png" alt="map of Zagreb">' +
+                                      '</div>' +
+                                      '</div>';
+      };
+      </script>
   </head>
   <body>
     <noscript>

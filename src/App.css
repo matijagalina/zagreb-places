@@ -125,6 +125,15 @@ body {
   text-decoration: underline;
 }
 
+.error-container {
+  text-align: center;
+}
+
+.error-image {
+  width: 100%;
+  height: auto;
+}
+
 @media screen and (max-width: 1200px) {
   .search-container {
     width: 40%;
