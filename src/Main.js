@@ -31,7 +31,7 @@ class Main extends Component {
         fullscreenControl: false,
         mapTypeControl: false
       })
-      // create markers on the map and add onclick listeners to list items
+      // create markers on the map and add onclick listeners to markers
       this.createMarkers()
     } else {
       // error handling

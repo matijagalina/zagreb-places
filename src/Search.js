@@ -14,8 +14,8 @@ class Search extends Component {
 
   // add listeners to list items
   addListenersToListItems = () => {
-    const list = document.querySelector('.places-list')
-    list.addEventListener('click', event => {
+    const $list = document.querySelector('.places-list')
+    $list.addEventListener('click', event => {
       if (event.target.nodeName === 'LI') {
         this.props.sendClickData(event)
       }
